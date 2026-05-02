@@ -1,0 +1,978 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>野毛たべもの横丁 | 野毛で、今夜の一軒を探す</title>
+  <meta name="description" content="寿司、鉄板焼、串カツ、ホルモン、ビストロまで。野毛たべもの横丁で、はしご酒を楽しむ。">
+  <style>
+    :root {
+      --paper: #f7f1e6;
+      --paper-deep: #eadcc6;
+      --ink: #2b2520;
+      --muted: #6d5e50;
+      --brand: #7a1f1f;
+      --brand-dark: #4f1515;
+      --accent: #b8322a;
+      --wood: #d6b887;
+      --wood-dark: #7f5633;
+      --line: rgba(43, 37, 32, .2);
+      --shadow: 0 8px 18px rgba(43, 37, 32, .1);
+      --radius: 3px;
+      --serif: Georgia, "Times New Roman", "Yu Mincho", "Hiragino Mincho ProN", serif;
+      --sans: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.75;
+      background:
+        radial-gradient(rgba(122, 31, 31, .06) 1px, transparent 1px),
+        var(--paper);
+      background-size: 18px 18px, auto;
+      padding-bottom: 52px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .site-header {
+      color: var(--paper);
+      background: var(--brand-dark);
+      border-bottom: 4px solid var(--accent);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 10px 18px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      width: 64px;
+    }
+
+    .brand img {
+      width: 100%;
+      height: auto;
+    }
+
+    .header-link {
+      display: none;
+      border: 1px solid rgba(247, 241, 230, .42);
+      padding: 7px 12px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .main-visual {
+      position: relative;
+      border-bottom: 1px solid var(--line);
+      background: #1f1712;
+    }
+
+    .main-visual > img {
+      height: 58vh;
+      min-height: 320px;
+      max-height: 620px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .photo-frame,
+    .shop-image,
+    .enjoy-photo {
+      position: relative;
+      background:
+        repeating-linear-gradient(0deg, rgba(127, 86, 51, .12) 0 1px, transparent 1px 9px),
+        #3a2318;
+    }
+
+    .photo-frame.is-missing::after,
+    .shop-image.is-missing::after,
+    .enjoy-photo.is-missing::after,
+    .main-visual.is-missing::after {
+      content: "写真準備中";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      color: var(--paper);
+      background: rgba(43, 37, 32, .72);
+      font-family: var(--serif);
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+
+    .hero-copy {
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-copy-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 18px 30px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--brand);
+      font-family: var(--serif);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .14em;
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--serif);
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--brand);
+      font-size: clamp(24px, 6.4vw, 52px);
+      line-height: 1.18;
+      white-space: nowrap;
+    }
+
+    .hero-copy p:last-of-type {
+      max-width: 720px;
+      margin: 12px 0 0;
+      color: #563d31;
+      font-weight: 700;
+    }
+
+    .hero-map {
+      width: min(100%, 520px);
+      margin: 16px 0 0;
+      border: 1px solid var(--line);
+      background: var(--paper-deep);
+    }
+
+    .hero-map img {
+      width: 100%;
+      height: auto;
+    }
+
+    .hero-actions,
+    .section-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      max-width: 430px;
+      margin-top: 20px;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 14px;
+      align-items: end;
+    }
+
+    .brand-seal {
+      width: 82px;
+      height: 82px;
+      object-fit: cover;
+      border: 1px solid rgba(43, 37, 32, .16);
+      border-radius: 50%;
+      background: var(--paper);
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 11px 14px;
+      border: 1px solid var(--brand);
+      border-radius: var(--radius);
+      font-weight: 900;
+      text-align: center;
+      transition: transform .16s ease;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      color: var(--paper);
+      background: var(--brand);
+      box-shadow: 3px 3px 0 rgba(43, 37, 32, .17);
+    }
+
+    .button-secondary {
+      color: var(--brand);
+      background: transparent;
+    }
+
+    .section {
+      padding: 46px 18px;
+    }
+
+    .section-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .section-kicker {
+      margin: 0 0 8px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .16em;
+    }
+
+    .section-title {
+      margin: 0;
+      color: var(--brand);
+      font-size: clamp(29px, 8vw, 44px);
+      line-height: 1.2;
+    }
+
+    .section-lead {
+      max-width: 760px;
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .concept {
+      background:
+        linear-gradient(90deg, transparent 0, transparent calc(100% - 1px), rgba(122, 31, 31, .08) calc(100% - 1px)),
+        var(--paper-deep);
+      background-size: 34px 100%, auto;
+      border-block: 1px solid var(--line);
+    }
+
+    .concept-box {
+      border-left: 5px solid var(--brand);
+      padding: 0 0 0 18px;
+    }
+
+    .concept-layout {
+      display: grid;
+      gap: 22px;
+    }
+
+    .concept-photo {
+      overflow: hidden;
+      min-height: 220px;
+      margin: 0;
+      border: 1px solid var(--line);
+    }
+
+    .concept-photo img {
+      height: 100%;
+      min-height: 220px;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .featured-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .shop-preview-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .shop-card {
+      position: relative;
+      display: grid;
+      overflow: hidden;
+      border: 1px solid rgba(43, 37, 32, .22);
+      border-radius: var(--radius);
+      background:
+        repeating-linear-gradient(0deg, rgba(127, 86, 51, .08) 0 1px, transparent 1px 9px),
+        var(--wood);
+      box-shadow: var(--shadow);
+    }
+
+    .shop-card::before,
+    .shop-card::after {
+      content: "";
+      position: absolute;
+      top: 11px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(43, 37, 32, .24);
+    }
+
+    .shop-card::before {
+      left: 10px;
+    }
+
+    .shop-card::after {
+      right: 10px;
+    }
+
+    .shop-image {
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(43, 37, 32, .22);
+    }
+
+    .shop-image img {
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(.95) contrast(1.02);
+    }
+
+    .shop-image.is-logo {
+      background:
+        radial-gradient(rgba(122, 31, 31, .08) 1px, transparent 1px),
+        var(--paper);
+      background-size: 14px 14px, auto;
+    }
+
+    .shop-image.is-logo img {
+      padding: 18px;
+      object-fit: contain;
+      filter: none;
+    }
+
+    .genre-badge {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      padding: 5px 9px;
+      color: var(--paper);
+      background: rgba(122, 31, 31, .94);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .shop-body {
+      padding: 18px 16px 16px;
+    }
+
+    .shop-name {
+      margin: 0;
+      color: var(--brand-dark);
+      font-size: 24px;
+      line-height: 1.24;
+    }
+
+    .shop-copy {
+      margin: 7px 0 12px;
+      color: #563d31;
+      font-weight: 800;
+    }
+
+    .shop-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin: 0 0 14px;
+      border-top: 1px solid rgba(43, 37, 32, .16);
+      border-left: 1px solid rgba(43, 37, 32, .16);
+    }
+
+    .meta-item {
+      min-width: 0;
+      padding: 8px 9px;
+      background: rgba(247, 241, 230, .46);
+      border-right: 1px solid rgba(43, 37, 32, .16);
+      border-bottom: 1px solid rgba(43, 37, 32, .16);
+    }
+
+    .meta-label {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .meta-value {
+      display: block;
+      margin-top: 2px;
+      font-size: 13px;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .shop-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+
+    .shop-actions .detail-link {
+      grid-column: 1 / -1;
+    }
+
+    .shop-actions .instagram-link {
+      grid-column: 1 / -1;
+    }
+
+    .button-call {
+      color: var(--paper);
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .button-reserve {
+      color: var(--paper);
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .button-detail {
+      color: var(--brand);
+      background: transparent;
+    }
+
+    .button-instagram {
+      color: var(--brand-dark);
+      background: rgba(247, 241, 230, .38);
+      border-color: var(--wood-dark);
+    }
+
+    .enjoy {
+      background: var(--brand-dark);
+      color: var(--paper);
+      border-block: 4px solid var(--accent);
+    }
+
+    .enjoy .section-title,
+    .enjoy .section-lead,
+    .enjoy .section-kicker {
+      color: var(--paper);
+    }
+
+    .enjoy-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .enjoy-item {
+      border: 1px solid rgba(247, 241, 230, .2);
+      border-left: 5px solid var(--accent);
+      padding: 16px;
+      background: rgba(247, 241, 230, .06);
+    }
+
+    .enjoy-photo {
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      margin: -16px -16px 14px;
+      border-bottom: 1px solid rgba(247, 241, 230, .18);
+    }
+
+    .enjoy-photo img {
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: saturate(.95) contrast(1.03);
+    }
+
+    .enjoy-item h3 {
+      margin: 0 0 5px;
+      color: #f0d4a8;
+      font-size: 20px;
+    }
+
+    .enjoy-item p {
+      margin: 0;
+      font-weight: 700;
+    }
+
+    .access {
+      background: var(--paper);
+    }
+
+    .access-grid {
+      display: grid;
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .access-info {
+      display: grid;
+      gap: 10px;
+    }
+
+    .info-block {
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--brand);
+      padding: 15px;
+      background: rgba(234, 220, 198, .68);
+    }
+
+    .info-block h3 {
+      margin: 0 0 4px;
+      color: var(--brand);
+      font-size: 18px;
+    }
+
+    .info-block p {
+      margin: 0;
+      font-weight: 800;
+    }
+
+    .map-frame {
+      overflow: hidden;
+      min-height: 300px;
+      border: 1px solid var(--line);
+      background: var(--ink);
+    }
+
+    .map-frame iframe {
+      display: block;
+      width: 100%;
+      height: 340px;
+      border: 0;
+    }
+
+    .bottom-cta {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      padding-bottom: env(safe-area-inset-bottom);
+      background: rgba(79, 21, 21, .97);
+      border-top: 3px solid var(--accent);
+      box-shadow: 0 -4px 12px rgba(43, 37, 32, .16);
+    }
+
+    .bottom-cta a {
+      display: grid;
+      place-items: center;
+      min-height: 44px;
+      color: var(--paper);
+      border-right: 1px solid rgba(247, 241, 230, .18);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .bottom-cta a:first-child {
+      background: rgba(184, 50, 42, .72);
+    }
+
+    @media (min-width: 680px) {
+      body {
+        padding-bottom: 0;
+      }
+
+      .header-link {
+        display: inline-flex;
+      }
+
+      .brand {
+        width: 76px;
+      }
+
+      .main-visual > img {
+        height: 620px;
+      }
+
+      .hero-copy-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 420px;
+        align-items: end;
+        gap: 34px;
+        padding: 30px 28px 38px;
+      }
+
+      .brand-seal {
+        justify-self: end;
+      }
+
+      .section {
+        padding: 64px 28px;
+      }
+
+      .concept-layout {
+        grid-template-columns: minmax(0, .9fr) minmax(340px, 1.1fr);
+        align-items: center;
+      }
+
+      .shop-preview-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .shop-card {
+        grid-template-columns: 190px minmax(0, 1fr);
+      }
+
+      .shop-image {
+        height: 100%;
+        min-height: 250px;
+        aspect-ratio: auto;
+        border-right: 1px solid rgba(43, 37, 32, .22);
+        border-bottom: 0;
+      }
+
+      .enjoy-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .access-grid {
+        grid-template-columns: minmax(280px, .78fr) minmax(0, 1.22fr);
+      }
+
+      .bottom-cta {
+        display: none;
+      }
+    }
+
+    @media (min-width: 1040px) {
+      .shop-preview-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .shop-card {
+        grid-template-columns: 220px minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="./index.html" aria-label="野毛たべもの横丁 トップへ">
+        <img src="./public/logo-noge-yokocho.png" alt="野毛たべもの横丁">
+      </a>
+      <a class="header-link" href="#access">アクセス</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="main-visual" aria-label="野毛たべもの横丁 メインビジュアル">
+      <img id="heroImage" src="./public/3c58cfea-2d7e-40f4-ad5e-22fe0b9a256e.png" alt="野毛たべもの横丁の路地と店舗外観" onerror="this.closest('.main-visual').classList.add('is-missing'); this.remove();">
+    </section>
+
+    <section class="hero-copy" aria-labelledby="hero-title">
+      <div class="hero-copy-inner">
+        <div>
+          <p class="eyebrow">NOGE TABEMONO YOKOCHO</p>
+          <h1 id="hero-title">野毛で、今夜の一軒を探す</h1>
+          <figure class="hero-map">
+            <img src="./public/top_map.png" alt="野毛たべもの横丁 店舗配置マップ" onerror="this.closest('.hero-map').remove();">
+          </figure>
+          <p>寿司、鉄板焼、串カツ、ホルモン、ビストロまで。野毛たべもの横丁で、はしご酒を楽しむ。</p>
+        </div>
+        <div class="hero-side">
+          <div class="hero-actions">
+            <a class="button button-primary" href="#all-shops">店舗一覧を見る</a>
+            <a class="button button-secondary" href="#access">アクセスを見る</a>
+          </div>
+          <img class="brand-seal" src="./public/307563500_600840395071686_3487810404752490948_n.png" alt="野毛たべもの横丁の印" onerror="this.remove();">
+        </div>
+      </div>
+    </section>
+
+    <section class="section concept" aria-labelledby="concept-title">
+      <div class="section-inner concept-layout">
+        <div class="concept-box">
+          <p class="section-kicker">CONCEPT</p>
+          <h2 class="section-title" id="concept-title">野毛たべもの横丁とは</h2>
+          <p class="section-lead">昔ながらの路地の空気を残した、野毛の飲み歩き横丁。小さな店を気軽にはしごしながら、寿司、鉄板焼、串カツ、ホルモン、ビストロまで一晩で楽しめます。</p>
+        </div>
+        <figure class="concept-photo photo-frame">
+          <img id="conceptImage" src="./public/img_slide01.jpg" alt="野毛たべもの横丁の看板と路地" onerror="this.closest('.photo-frame').classList.add('is-missing'); this.remove();">
+        </figure>
+      </div>
+    </section>
+
+    <section class="section enjoy" aria-labelledby="enjoy-title">
+      <div class="section-inner">
+        <p class="section-kicker">HOW TO ENJOY</p>
+        <h2 class="section-title" id="enjoy-title">横丁の楽しみ方</h2>
+        <p class="section-lead">一軒でゆっくり、数軒を少しずつ。野毛らしい夜の使い方ができます。</p>
+        <div class="enjoy-grid">
+          <article class="enjoy-item">
+            <div class="enjoy-photo"><img data-enjoy-image="0" src="./public/img_head.png" alt="一軒目に楽しむ料理" onerror="this.closest('.enjoy-photo').classList.add('is-missing'); this.remove();"></div>
+            <h3>一軒目</h3>
+            <p>まずは寿司や鉄板焼で腹ごしらえ。早い時間の集合にも。</p>
+          </article>
+          <article class="enjoy-item">
+            <div class="enjoy-photo"><img data-enjoy-image="1" src="./public/img_foot.png" alt="二軒目に立ち寄る横丁の雰囲気" onerror="this.closest('.enjoy-photo').classList.add('is-missing'); this.remove();"></div>
+            <h3>二軒目</h3>
+            <p>串カツ、ホルモン、ビストロで飲み足しにちょうどいい一杯を。</p>
+          </article>
+          <article class="enjoy-item">
+            <div class="enjoy-photo"><img data-enjoy-image="2" src="./public/3c58cfea-2d7e-40f4-ad5e-22fe0b9a256e.png" alt="はしご酒を楽しむ横丁の路地" onerror="this.closest('.enjoy-photo').classList.add('is-missing'); this.remove();"></div>
+            <h3>はしご酒</h3>
+            <p>小さな店を気軽に巡って、横丁の賑わいを味わう夜に。</p>
+          </article>
+          <article class="enjoy-item">
+            <div class="enjoy-photo"><img data-enjoy-image="3" src="./public/top_map.png" alt="宴会や貸切で使いやすい横丁案内" onerror="this.closest('.enjoy-photo').classList.add('is-missing'); this.remove();"></div>
+            <h3>宴会・貸切</h3>
+            <p>人数やシーンに合わせて、電話で空席や予約を確認できます。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="all-shops" aria-labelledby="all-shops-title">
+      <div class="section-inner">
+        <p class="section-kicker">ALL SHOPS</p>
+        <h2 class="section-title" id="all-shops-title">すべての店舗</h2>
+        <p class="section-lead">電話・予約・詳細ページへそのまま進めます。</p>
+        <div class="shop-preview-grid" id="allShopGrid"></div>
+      </div>
+    </section>
+
+    <section class="section access" id="access" aria-labelledby="access-title">
+      <div class="section-inner">
+        <p class="section-kicker">ACCESS</p>
+        <h2 class="section-title" id="access-title">アクセス</h2>
+        <p class="section-lead">野毛の夜を歩きながら、気軽に立ち寄れる横丁です。</p>
+        <div class="access-grid">
+          <div class="access-info">
+            <div class="info-block">
+              <h3>住所</h3>
+              <p>神奈川県横浜市中区野毛町2丁目74-1 野毛たべもの横丁</p>
+            </div>
+            <div class="info-block">
+              <h3>最寄駅</h3>
+              <p>JR・横浜市営地下鉄「桜木町駅」徒歩約5分。京急「日ノ出町駅」徒歩約6分。</p>
+            </div>
+            <div class="info-block">
+              <h3>問い合わせ</h3>
+              <p><a href="tel:0450000000">045-000-0000</a></p>
+            </div>
+          </div>
+          <div class="map-frame" aria-label="Google Map">
+            <iframe title="野毛たべもの横丁 Google Map" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=%E7%A5%9E%E5%A5%88%E5%B7%9D%E7%9C%8C%E6%A8%AA%E6%B5%9C%E5%B8%82%E4%B8%AD%E5%8C%BA%E9%87%8E%E6%AF%9B%E7%94%BA2%E4%B8%81%E7%9B%AE74-1&output=embed"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="bottom-cta" aria-label="スマートフォン固定ナビゲーション">
+    <a href="#all-shops">店舗一覧</a>
+    <a href="tel:0450000000">電話</a>
+    <a href="#access">アクセス</a>
+  </nav>
+
+  <script>
+    const siteImages = {
+      heroImage: "./public/3c58cfea-2d7e-40f4-ad5e-22fe0b9a256e.png",
+      conceptImage: "./public/img_slide01.jpg",
+      enjoyImages: [
+        "./public/img_head.png",
+        "./public/img_foot.png",
+        "./public/3c58cfea-2d7e-40f4-ad5e-22fe0b9a256e.png",
+        "./public/top_map.png"
+      ]
+    };
+
+    const shops = [
+      {
+        name: "Graine Marche",
+        catch: "横丁の夜に寄り添う、気軽なビストロ酒場。",
+        genre: "ビストロ",
+        hours: "17:00-23:30",
+        budget: "4,000-6,000円",
+        seats: "12席",
+        tel: "045-000-1001",
+        detailUrl: "#",
+        reserveUrl: "#",
+        instagramUrl: "#",
+        image: "./public/logo_shop01.png",
+        imageType: "logo"
+      },
+      {
+        name: "スナック へそまがり",
+        catch: "もう少し飲みたい夜に、肩ひじ張らない一杯を。",
+        genre: "スナック",
+        hours: "20:00-26:00",
+        budget: "3,000-5,000円",
+        seats: "14席",
+        tel: "045-000-1002",
+        detailUrl: "#",
+        reserveUrl: "#",
+        instagramUrl: "#",
+        image: "./public/logo_shop02.png",
+        imageType: "logo"
+      },
+      {
+        name: "鉄板焼き 門鉄",
+        catch: "湯気とソースの香りで始まる野毛の夜。",
+        genre: "鉄板焼",
+        hours: "16:00-24:00",
+        budget: "3,000-4,500円",
+        seats: "20席",
+        tel: "045-000-1003",
+        detailUrl: "#",
+        reserveUrl: "#",
+        instagramUrl: "#",
+        image: "./public/logo_shop03.png",
+        imageType: "logo"
+      },
+      {
+        name: "居酒屋 あお",
+        catch: "一軒目にも二軒目にも使いやすい、横丁の居酒屋。",
+        genre: "居酒屋",
+        hours: "17:00-24:00",
+        budget: "3,000-4,500円",
+        seats: "18席",
+        tel: "045-000-1004",
+        detailUrl: "#",
+        reserveUrl: "#",
+        instagramUrl: "#",
+        image: "./public/logo_shop04.png",
+        imageType: "logo"
+      },
+      {
+        name: "まんぼう",
+        catch: "魚と酒を気軽に楽しむ、野毛らしい一軒。",
+        genre: "海鮮",
+        hours: "18:00-24:00",
+        budget: "3,500-5,000円",
+        seats: "16席",
+        tel: "045-000-1005",
+        detailUrl: "#",
+        reserveUrl: "#",
+        instagramUrl: "#",
+        image: "./public/logo_shop05.png",
+        imageType: "logo"
+      },
+      {
+        name: "串カツと串中 夢源",
+        catch: "揚げたてを片手に、軽く一杯から。",
+        genre: "串カツ",
+        hours: "15:00-23:00",
+        budget: "2,000-3,500円",
+        seats: "20席",
+        tel: "045-000-1006",
+        detailUrl: "#",
+        reserveUrl: "#",
+        instagramUrl: "#",
+        image: "./public/logo_shop06.png",
+        imageType: "logo"
+      },
+      {
+        name: "超ホルモン",
+        catch: "煙までうまい、香ばしいホルモン酒場。",
+        genre: "ホルモン",
+        hours: "17:00-23:00",
+        budget: "3,000-4,000円",
+        seats: "22席",
+        tel: "",
+        detailUrl: "#",
+        reserveUrl: "#",
+        instagramUrl: "#",
+        image: "./public/logo_shop07.png",
+        imageType: "logo"
+      }
+    ];
+
+    function normalizeTel(tel) {
+      return tel.replace(/[^\d+]/g, "");
+    }
+
+    function markMissingImage(image) {
+      const frame = image.closest(".main-visual, .photo-frame, .shop-image, .enjoy-photo");
+      if (frame) frame.classList.add("is-missing");
+      image.remove();
+    }
+
+    function applyManagedImages() {
+      const heroImage = document.getElementById("heroImage");
+      const conceptImage = document.getElementById("conceptImage");
+      if (heroImage) heroImage.src = siteImages.heroImage;
+      if (conceptImage) conceptImage.src = siteImages.conceptImage;
+      document.querySelectorAll("[data-enjoy-image]").forEach((image) => {
+        const imagePath = siteImages.enjoyImages[Number(image.dataset.enjoyImage)];
+        if (imagePath) image.src = imagePath;
+      });
+      document.querySelectorAll("img").forEach((image) => {
+        image.addEventListener("error", () => markMissingImage(image), { once: true });
+      });
+    }
+
+    function shopCard(shop) {
+      const telHref = shop.tel ? `tel:${normalizeTel(shop.tel)}` : "";
+      const callButton = shop.tel
+        ? `<a class="button button-call" href="${telHref}">電話する</a>`
+        : `<span class="button button-secondary">電話なし</span>`;
+      const instagramButton = shop.instagramUrl
+        ? `<a class="button button-instagram instagram-link" href="${shop.instagramUrl}" target="_blank" rel="noopener noreferrer">Instagramを見る</a>`
+        : "";
+
+      return `
+        <article class="shop-card">
+          <div class="shop-image ${shop.imageType === "logo" ? "is-logo" : ""}">
+            <img src="${shop.image}" alt="${shop.name}の店舗イメージ" loading="lazy" onerror="this.closest('.shop-image').classList.add('is-missing'); this.remove();">
+            <span class="genre-badge">${shop.genre}</span>
+          </div>
+          <div class="shop-body">
+            <h3 class="shop-name">${shop.name}</h3>
+            <p class="shop-copy">${shop.catch}</p>
+            <dl class="shop-meta">
+              <div class="meta-item">
+                <dt class="meta-label">営業時間</dt>
+                <dd class="meta-value">${shop.hours}</dd>
+              </div>
+              <div class="meta-item">
+                <dt class="meta-label">予算</dt>
+                <dd class="meta-value">${shop.budget}</dd>
+              </div>
+              <div class="meta-item">
+                <dt class="meta-label">席数</dt>
+                <dd class="meta-value">${shop.seats}</dd>
+              </div>
+              <div class="meta-item">
+                <dt class="meta-label">TEL</dt>
+                <dd class="meta-value">${shop.tel || "店舗へ確認"}</dd>
+              </div>
+            </dl>
+            <div class="shop-actions">
+              <a class="button button-detail detail-link" href="${shop.detailUrl}">詳しく見る</a>
+              ${callButton}
+              <a class="button button-reserve" href="${shop.reserveUrl}">予約する</a>
+              ${instagramButton}
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    applyManagedImages();
+    document.getElementById("allShopGrid").innerHTML = shops.map(shopCard).join("");
+  </script>
+</body>
+</html>
