@@ -404,6 +404,58 @@
       line-height: 1.55;
     }
 
+    /* ===== Instagram Banner ===== */
+    .insta-section {
+      padding: 28px 18px;
+      background: var(--bg-2);
+      border-top: 1px solid var(--line);
+    }
+    .insta-inner { max-width: 1120px; margin: 0 auto; }
+    .insta-link {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
+      border-radius: var(--r);
+      color: #fff;
+      text-decoration: none;
+      box-shadow: var(--shadow);
+    }
+    .insta-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,.18);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      line-height: 1;
+    }
+    .insta-text { min-width: 0; }
+    .insta-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      opacity: .85;
+      letter-spacing: .1em;
+      margin-bottom: 2px;
+    }
+    .insta-handle {
+      display: block;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+    .insta-arrow {
+      margin-left: auto;
+      font-size: 18px;
+      opacity: .8;
+      flex-shrink: 0;
+    }
+
     /* ===== Access ===== */
     .access-section {
       padding: 32px 18px 36px;
@@ -647,6 +699,23 @@
             <p>スナックやバーで、最高の夜を締めくくる。</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Instagram -->
+    <section class="insta-section">
+      <div class="insta-inner">
+        <a class="insta-link"
+           href="https://www.instagram.com/noge.tabemono_yokochou/"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="野毛たべもの横丁 公式Instagram">
+          <span class="insta-icon">📷</span>
+          <span class="insta-text">
+            <span class="insta-label">公式 INSTAGRAM</span>
+            <span class="insta-handle">@noge.tabemono_yokochou</span>
+          </span>
+          <span class="insta-arrow">›</span>
+        </a>
       </div>
     </section>
 
