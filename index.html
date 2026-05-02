@@ -593,12 +593,23 @@
     <!-- Yokocho Map -->
     <section class="yokocho-map-sec" aria-labelledby="yokocho-map-title">
       <div class="yokocho-map-inner">
-        <h2 class="sec-title" id="yokocho-map-title">横丁地図</h2>
+        <h2 class="sec-title" id="yokocho-map-title">横丁内地図</h2>
         <div class="map-img-card">
-          <img src="map.png" alt="野毛たべもの横丁 地図"
+          <img src="top_map.png" alt="野毛たべもの横丁 案内図"
+               id="yokochoMapImg" usemap="#yokochoMapDef"
                onerror="this.closest('.map-img-card').style.display='none'">
+          <map name="yokochoMapDef" id="yokochoMapDef">
+            <!-- 座標はnaturalWidth=800 基準。JS でスケール調整 -->
+            <area shape="rect" data-coords="55,52,198,230"  data-shop="0" href="#shop-0" alt="Graine Marche">
+            <area shape="rect" data-coords="198,52,358,230" data-shop="1" href="#shop-1" alt="スナック へそまがり">
+            <area shape="rect" data-coords="358,52,508,230" data-shop="2" href="#shop-2" alt="鉄板焼き 肘鉄">
+            <area shape="rect" data-coords="508,52,665,230" data-shop="3" href="#shop-3" alt="居酒屋 あお">
+            <area shape="rect" data-coords="55,278,205,466" data-shop="6" href="#shop-6" alt="超ホルモン">
+            <area shape="rect" data-coords="205,278,390,466" data-shop="5" href="#shop-5" alt="串カツと串中 夢源">
+            <area shape="rect" data-coords="530,278,718,466" data-shop="4" href="#shop-4" alt="まんぼう">
+          </map>
         </div>
-        <p class="map-caption">現在地と店舗位置を確認できます</p>
+        <p class="map-caption">ロゴをタップすると店舗カードへ移動します</p>
       </div>
     </section>
 
@@ -789,9 +800,9 @@
       }
     ];
 
-    function shopCard(shop) {
+    function shopCard(shop, index) {
       return `
-        <article class="shop-card">
+        <article class="shop-card" id="shop-${index}">
           <div class="shop-img-wrap ${shop.imageType === "logo" ? "is-logo" : ""}">
             <img src="${shop.image}" alt="${shop.name}の店舗イメージ" loading="lazy"
                  onerror="this.closest('.shop-img-wrap').classList.add('is-missing'); this.remove();">
@@ -810,7 +821,7 @@
         </article>`;
     }
 
-    document.getElementById("allShopGrid").innerHTML = shops.map(shopCard).join("");
+    document.getElementById("allShopGrid").innerHTML = shops.map((s, i) => shopCard(s, i)).join("");
 
     /* hero image fallback */
     const heroImg = document.getElementById("heroImage");
@@ -820,6 +831,39 @@
         heroImg.remove();
       };
     }
+
+    /* ===== Image map: responsive scaling ===== */
+    function scaleMap() {
+      const img = document.getElementById("yokochoMapImg");
+      if (!img || !img.naturalWidth) return;
+      const scale = img.clientWidth / img.naturalWidth;
+      document.querySelectorAll("#yokochoMapDef area").forEach(area => {
+        const orig = area.dataset.coords.split(",").map(Number);
+        area.coords = orig.map(v => Math.round(v * scale)).join(",");
+      });
+    }
+    window.addEventListener("load", scaleMap);
+    window.addEventListener("resize", scaleMap);
+
+    /* ===== Image map: tap → scroll to shop card ===== */
+    document.querySelectorAll("#yokochoMapDef area[data-shop]").forEach(area => {
+      area.addEventListener("click", e => {
+        e.preventDefault();
+        const idx = Number(area.dataset.shop);
+        const allShops = document.getElementById("all-shops");
+        const track    = document.querySelector(".shop-track");
+        const card     = document.getElementById("shop-" + idx);
+        if (!card || !allShops) return;
+        allShops.scrollIntoView({ behavior: "smooth" });
+        setTimeout(() => {
+          if (track && track.scrollWidth > track.clientWidth) {
+            track.scrollTo({ left: Math.max(0, card.offsetLeft - 18), behavior: "smooth" });
+          } else {
+            card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          }
+        }, 450);
+      });
+    });
   </script>
 </body>
 </html>
