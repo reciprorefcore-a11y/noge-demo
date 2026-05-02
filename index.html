@@ -93,14 +93,35 @@
       position: relative;
       border-bottom: 1px solid var(--line);
       background: #1f1712;
+      overflow: hidden;
     }
 
     .main-visual > img {
-      height: 58vh;
+      height: 60vh;
       min-height: 320px;
-      max-height: 620px;
       object-fit: cover;
       object-position: center;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, .3);
+      pointer-events: none;
+    }
+
+    .hero-logo-wrap {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-logo {
+      width: 160px;
+      height: auto;
+      display: block;
     }
 
     .photo-frame,
@@ -602,7 +623,12 @@
       }
 
       .main-visual > img {
-        height: 620px;
+        height: 80vh;
+        min-height: 480px;
+      }
+
+      .hero-logo {
+        width: 224px;
       }
 
       .hero-copy-inner {
@@ -655,6 +681,12 @@
       }
     }
 
+    @media (min-width: 768px) {
+      .hero-logo {
+        width: 256px;
+      }
+    }
+
     @media (min-width: 1040px) {
       .shop-preview-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -678,7 +710,11 @@
 
   <main id="top">
     <section class="main-visual" aria-label="野毛たべもの横丁 メインビジュアル">
-      <img id="heroImage" src="3c58cfea-2d7e-40f4-ad5e-22fe0b9a256e.png" alt="野毛たべもの横丁の路地と店舗外観" onerror="this.closest('.main-visual').classList.add('is-missing'); this.remove();">
+      <img id="heroImage" src="images/top1.png" alt="野毛たべもの横丁の路地と店舗外観" onerror="this.closest('.main-visual').classList.add('is-missing'); this.remove();">
+      <div class="hero-overlay"></div>
+      <div class="hero-logo-wrap">
+        <img src="logo-noge-yokocho.png" alt="野毛たべもの横丁" class="hero-logo">
+      </div>
     </section>
 
     <section class="hero-copy" aria-labelledby="hero-title">
@@ -789,7 +825,7 @@
 
   <script>
     const siteImages = {
-      heroImage: "3c58cfea-2d7e-40f4-ad5e-22fe0b9a256e.png",
+      heroImage: "images/top1.png",
       conceptImage: "img_slide01.jpg",
       enjoyImages: [
         "img_head.png",
@@ -829,7 +865,7 @@
         imageType: "logo"
       },
       {
-        name: "鉄板焼き 門鉄",
+        name: "鉄板焼き 肘鉄",
         catch: "湯気とソースの香りで始まる野毛の夜。",
         genre: "鉄板焼",
         hours: "16:00-24:00",
