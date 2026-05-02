@@ -103,26 +103,6 @@
       object-position: center;
     }
 
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, .3);
-      pointer-events: none;
-    }
-
-    .hero-logo-wrap {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .hero-logo {
-      width: 160px;
-      height: auto;
-      display: block;
-    }
 
     .photo-frame,
     .shop-image,
@@ -627,9 +607,6 @@
         min-height: 480px;
       }
 
-      .hero-logo {
-        width: 224px;
-      }
 
       .hero-copy-inner {
         display: grid;
@@ -681,12 +658,6 @@
       }
     }
 
-    @media (min-width: 768px) {
-      .hero-logo {
-        width: 256px;
-      }
-    }
-
     @media (min-width: 1040px) {
       .shop-preview-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -711,10 +682,6 @@
   <main id="top">
     <section class="main-visual" aria-label="野毛たべもの横丁 メインビジュアル">
       <img id="heroImage" src="images/top1.png" alt="野毛たべもの横丁の路地と店舗外観" onerror="this.closest('.main-visual').classList.add('is-missing'); this.remove();">
-      <div class="hero-overlay"></div>
-      <div class="hero-logo-wrap">
-        <img src="logo-noge-yokocho.png" alt="野毛たべもの横丁" class="hero-logo">
-      </div>
     </section>
 
     <section class="hero-copy" aria-labelledby="hero-title">
