@@ -1,0 +1,10 @@
+{
+  "name": "noge-yokocho",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Static site — no build step required' && exit 0",
+    "dev": "npx serve . -p 3000",
+    "start": "npx serve ."
+  }
+}

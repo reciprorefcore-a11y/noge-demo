@@ -41,21 +41,14 @@
       font-family: var(--sans);
       line-height: 1.7;
       background: var(--bg);
-      padding-bottom: 68px; /* bottom nav height */
+      padding-bottom: 68px;
     }
     a  { color: inherit; text-decoration: none; }
     img { display: block; width: 100%; height: auto; }
     h1, h2, h3 { font-family: var(--serif); }
 
-    /* ===== Site Header ===== */
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(14,12,12,.94);
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(10px);
-    }
+    /* ===== Site Header – PC only ===== */
+    .site-header { display: none; }
     .header-inner {
       display: flex;
       align-items: center;
@@ -67,7 +60,7 @@
     .brand { display: inline-flex; align-items: center; width: 48px; }
     .brand img { width: 100%; height: auto; }
     .header-link {
-      display: none;
+      display: inline-flex;
       align-items: center;
       color: var(--text);
       border: 1px solid rgba(240,235,228,.28);
@@ -91,18 +84,62 @@
       object-fit: cover;
       object-position: center;
     }
+
+    /* Overlay – subtle gradient, not pitch-black */
     .hero-grad {
       position: absolute;
       inset: 0;
       background: linear-gradient(
         to bottom,
-        rgba(0,0,0,.08) 0%,
-        rgba(0,0,0,.18) 35%,
-        rgba(0,0,0,.72) 70%,
-        rgba(0,0,0,.92) 100%
+        rgba(0,0,0,.20) 0%,
+        rgba(0,0,0,.10) 35%,
+        rgba(0,0,0,.10) 55%,
+        rgba(0,0,0,.45) 100%
       );
       pointer-events: none;
     }
+
+    /* Mobile: logo left + hamburger right, overlaid on hero */
+    .hero-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+    }
+    .hero-bar-logo { display: block; width: 52px; }
+    .hero-bar-logo img {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 1px 5px rgba(0,0,0,.55));
+    }
+    .hero-menu-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      background: rgba(0,0,0,.38);
+      border: 1px solid rgba(255,255,255,.20);
+      border-radius: 10px;
+      cursor: pointer;
+      padding: 9px;
+    }
+    .hero-menu-btn span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: #fff;
+      border-radius: 1px;
+    }
+
+    /* Hero copy */
     .hero-content {
       position: absolute;
       inset: 0;
@@ -114,38 +151,40 @@
       text-align: left;
     }
     .hero-title {
-      margin: 0 0 12px;
+      margin: 0 0 10px;
       color: #fff;
       font-family: "Kaisei Opti", "Yu Mincho", "Hiragino Mincho ProN", serif;
       font-size: clamp(32px, 9vw, 58px);
       font-weight: 700;
       line-height: 1.3;
       letter-spacing: .04em;
-      text-shadow: 0 2px 16px rgba(0,0,0,.65);
+      text-shadow: 0 2px 14px rgba(0,0,0,.65);
     }
     .hero-sub {
-      margin: 0 0 24px;
-      color: rgba(255,255,255,.84);
+      margin: 0 0 20px;
+      color: rgba(255,255,255,.86);
       font-size: clamp(13px, 3.4vw, 15px);
       font-weight: 600;
       line-height: 1.75;
       text-shadow: 0 1px 6px rgba(0,0,0,.5);
     }
+    /* CTA: pill, auto-width, 44px high, right-arrow */
     .btn-hero {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      min-height: 46px;
-      max-width: 240px;
-      padding: 12px 22px;
+      gap: 7px;
+      min-height: 44px;
+      padding: 0 20px;
       background: var(--accent);
       color: #fff;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 800;
-      border-radius: 28px;
+      border-radius: 999px;
       letter-spacing: .04em;
       box-shadow: 0 4px 18px rgba(231,76,60,.42);
+      white-space: nowrap;
     }
+    .btn-hero-arrow { font-size: 17px; line-height: 1; font-family: var(--sans); }
     .main-visual.is-missing::after {
       content: "写真準備中";
       position: absolute;
@@ -157,14 +196,17 @@
       font-family: var(--serif);
     }
 
-    /* ===== Category Cards (4-col grid) ===== */
+    /* ===== Category Cards (4-col) ===== */
     .cat-section {
-      background: #f5f0e8;
-      border-bottom: 1px solid rgba(0,0,0,.08);
+      background: var(--bg);
+      padding: 14px 12px 16px;
     }
     .cat-cards {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
+      background: #f5f0e8;
+      border-radius: 22px;
+      overflow: hidden;
     }
     .cat-card {
       display: flex;
@@ -172,7 +214,7 @@
       align-items: center;
       justify-content: center;
       gap: 5px;
-      padding: 14px 6px 16px;
+      padding: 14px 5px 15px;
       text-align: center;
       border-right: 1px solid rgba(0,0,0,.09);
       color: #2b2520;
@@ -235,7 +277,6 @@
     .shops-section { padding: 32px 0 36px; }
     .shops-head { padding: 0 18px 18px; }
 
-    /* horizontal scroll track (mobile) */
     .shop-track {
       display: flex;
       gap: 14px;
@@ -247,7 +288,6 @@
     }
     .shop-track::-webkit-scrollbar { display: none; }
 
-    /* card */
     .shop-card {
       flex: 0 0 80vw;
       max-width: 300px;
@@ -412,7 +452,6 @@
     }
     .insta-inner { max-width: 1120px; margin: 0 auto; }
 
-    /* アカウントバナー */
     .insta-account {
       display: flex;
       align-items: center;
@@ -440,7 +479,6 @@
     .insta-handle { display: block; font-size: 14px; font-weight: 800; }
     .insta-arrow { font-size: 18px; opacity: .75; }
 
-    /* 最新投稿 */
     .insta-latest { border-radius: var(--r); overflow: hidden; }
     .insta-loading {
       padding: 32px;
@@ -574,10 +612,7 @@
       line-height: 1;
     }
     .nav-item.is-active { color: var(--accent); }
-    .nav-icon {
-      font-size: 17px;
-      line-height: 1;
-    }
+    .nav-icon { font-size: 17px; line-height: 1; }
     .nav-reserve {
       background: var(--brand);
       color: #fff;
@@ -588,14 +623,26 @@
     /* ===== Responsive ===== */
     @media (min-width: 680px) {
       body { padding-bottom: 0; }
-      .header-link { display: inline-flex; }
+
+      /* Show sticky PC header, hide mobile hero-bar */
+      .site-header {
+        display: block;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(14,12,12,.94);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(10px);
+      }
+      .hero-bar { display: none; }
+
       .brand { width: 60px; }
 
       #heroImage { height: 62vh; min-height: 380px; max-height: 640px; }
       .hero-content { padding: 40px 48px 64px; }
       .hero-title { font-size: clamp(38px, 5.5vw, 64px); }
 
-      /* categories: keep 4-col, bigger padding */
+      .cat-section { padding: 18px 20px 20px; }
       .cat-card { padding: 18px 12px 20px; }
       .cat-icon  { font-size: 26px; }
       .cat-label { font-size: 12px; }
@@ -603,7 +650,6 @@
 
       .yokocho-map-sec { padding: 36px 28px 40px; }
 
-      /* shops: 2-col grid */
       .shops-section { padding: 48px 0 52px; }
       .shops-head { padding: 0 28px 20px; }
       .shop-track {
@@ -615,13 +661,11 @@
       }
       .shop-card { flex: none; max-width: none; }
 
-      /* enjoy */
       .enjoy-section { padding: 52px 28px 56px; }
       .step-card { padding: 18px 14px 20px; }
       .step-card h3 { font-size: 15px; }
       .step-card p  { font-size: 13px; }
 
-      /* access */
       .access-section { padding: 52px 28px 56px; }
       .access-grid { grid-template-columns: minmax(260px,.76fr) minmax(0,1.24fr); }
       .map-frame iframe { height: 360px; }
@@ -634,9 +678,9 @@
     }
   </style>
 </head>
-<body>
+<body id="top">
 
-  <!-- Header -->
+  <!-- Header – PC only (hidden on mobile via CSS) -->
   <header class="site-header">
     <div class="header-inner">
       <a class="brand" href="index.html" aria-label="野毛たべもの横丁 トップへ">
@@ -646,17 +690,31 @@
     </div>
   </header>
 
-  <main id="top">
+  <main>
 
     <!-- Hero -->
     <section class="main-visual" aria-label="野毛たべもの横丁 メインビジュアル">
       <img id="heroImage" src="images/top1.png" alt="野毛たべもの横丁の路地と店舗外観"
            onerror="this.closest('.main-visual').classList.add('is-missing'); this.remove();">
       <div class="hero-grad" aria-hidden="true"></div>
+
+      <!-- Mobile: logo left + hamburger right -->
+      <div class="hero-bar" aria-hidden="true">
+        <a class="hero-bar-logo" href="index.html">
+          <img src="logo-noge-yokocho.png" alt="野毛たべもの横丁">
+        </a>
+        <button class="hero-menu-btn" aria-label="メニューを開く">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
       <div class="hero-content">
-        <h1 class="hero-title">今日、野毛横丁で<br>何飲む？</h1>
+        <h1 class="hero-title">今日、<br>野毛横丁で<br>何飲む？</h1>
         <p class="hero-sub">個性あふれるお店がひしめく大人の横丁。<br>きっとお気に入りが見つかる。</p>
-        <a class="btn-hero" href="#access">アクセス・マップを見る</a>
+        <a class="btn-hero" href="#access">
+          アクセス・マップを見る
+          <span class="btn-hero-arrow">›</span>
+        </a>
       </div>
     </section>
 
@@ -689,11 +747,11 @@
     <!-- Yokocho Map -->
     <section class="yokocho-map-sec" aria-labelledby="yokocho-map-title">
       <div class="yokocho-map-inner">
-        <h2 class="sec-title" id="yokocho-map-title">横丁内地図</h2>
+        <h2 class="sec-title" id="yokocho-map-title">横丁地図</h2>
         <div class="map-img-card">
-          <img src="top_map.png" alt="野毛たべもの横丁 案内図"
+          <img src="map.png" alt="野毛たべもの横丁 案内図"
                id="yokochoMapImg" usemap="#yokochoMapDef"
-               onerror="this.closest('.map-img-card').style.display='none'">
+               onerror="this.src='top_map.png'">
           <map name="yokochoMapDef" id="yokochoMapDef">
             <!-- 座標はnaturalWidth=800 基準。JS でスケール調整 -->
             <area shape="rect" data-coords="55,52,198,230"  data-shop="0" href="#shop-0" alt="Graine Marche">
@@ -705,7 +763,7 @@
             <area shape="rect" data-coords="530,278,718,466" data-shop="4" href="#shop-4" alt="まんぼう">
           </map>
         </div>
-        <p class="map-caption">ロゴをタップすると店舗カードへ移動します</p>
+        <p class="map-caption">現在地と店舗位置を確認できます</p>
       </div>
     </section>
 
@@ -729,17 +787,17 @@
         <div class="steps">
           <div class="step-card">
             <span class="step-no">1軒目</span>
-            <h3>気になるお店で乾杯</h3>
+            <h3>気になるお店で乾杯！</h3>
             <p>まずは直感で入店。好きな味から夜を始めよう。</p>
           </div>
           <div class="step-card">
             <span class="step-no">2軒目</span>
-            <h3>はしごして味を開拓</h3>
+            <h3>はしごしてお気に入りを見つける</h3>
             <p>気になった隣の店へ。横丁だから気軽に移動できる。</p>
           </div>
           <div class="step-card">
             <span class="step-no">3軒目〜</span>
-            <h3>〆の一杯で最高の夜</h3>
+            <h3>〆の一杯で最高の夜を。</h3>
             <p>スナックやバーで、最高の夜を締めくくる。</p>
           </div>
         </div>
