@@ -57,14 +57,24 @@ img{display:block;width:100%;height:auto;}
 .header-reserve:hover{background:var(--accent);}
 
 /* ===== Hero ===== */
-.main-visual{position:relative;background:var(--bg);overflow:hidden;height:58vh;min-height:320px;max-height:560px;}
-.hero-slides{position:absolute;inset:0;}
-.hero-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition:opacity 1s ease;}
+.main-visual{position:relative;background:var(--bg);overflow:hidden;}
+.hero-slides{position:relative;width:100%;height:58vh;min-height:320px;max-height:560px;}
+.hero-slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease;}
 .hero-slide.is-active{opacity:1;}
+.hero-slide img{width:100%;height:100%;object-fit:cover;object-position:center;}
 .hero-grad{
-  position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(to bottom,rgba(0,0,0,.10) 0%,rgba(0,0,0,.04) 30%,rgba(0,0,0,.10) 60%,rgba(0,0,0,.52) 100%);
+  position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:linear-gradient(to bottom,rgba(0,0,0,.10) 0%,rgba(0,0,0,.04) 30%,rgba(0,0,0,.10) 60%,rgba(0,0,0,.55) 100%);
 }
+.slide-dots{
+  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+  display:flex;gap:7px;z-index:5;
+}
+.slide-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:rgba(255,255,255,.4);border:none;padding:0;cursor:pointer;transition:background .3s;
+}
+.slide-dot.is-active{background:#fff;}
 .hero-bar{
   position:absolute;top:0;left:0;right:0;z-index:10;
   display:flex;align-items:center;justify-content:space-between;padding:14px 18px;
@@ -86,9 +96,8 @@ img{display:block;width:100%;height:auto;}
   font-family:var(--hand);font-size:clamp(38px,10.5vw,80px);
   font-weight:400;line-height:1.25;letter-spacing:.08em;
   text-shadow:
-    0 2px 8px rgba(0,0,0,.95),
-    0 4px 32px rgba(0,0,0,.85),
-    0 1px 2px rgba(0,0,0,1);
+    0 2px 24px rgba(0,0,0,.80),
+    0 1px 6px rgba(0,0,0,.60);
 }
 .hero-sub{
   margin:0 0 20px;color:rgba(255,255,255,.88);
@@ -161,6 +170,7 @@ img{display:block;width:100%;height:auto;}
 .shop-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}
 .shop-chip{padding:3px 10px;background:var(--gold-dim);border:1px solid var(--line-warm);border-radius:20px;color:var(--gold);font-size:11px;font-weight:700;}
 .shop-budget{margin:0 0 12px;color:var(--accent);font-size:13px;font-weight:800;}
+.shop-tel{display:block;margin:0 0 8px;color:var(--gold);font-size:12px;font-weight:700;}
 .shop-btn{
   display:flex;align-items:center;justify-content:space-between;
   min-height:40px;padding:0 14px;background:var(--brand);color:#fff;
@@ -241,7 +251,8 @@ img{display:block;width:100%;height:auto;}
   }
   .hero-bar{display:none;}
 
-  .main-visual{height:70vh;min-height:420px;max-height:700px;}
+  #heroImage{height:70vh;min-height:420px;max-height:700px;}
+  .hero-slides{height:70vh;min-height:420px;max-height:700px;}
   .hero-content{padding:48px 72px 80px;}
 
   /* category */
@@ -312,10 +323,10 @@ img{display:block;width:100%;height:auto;}
   <!-- Hero -->
   <section class="main-visual" aria-label="メインビジュアル">
     <div class="hero-slides" id="heroSlides">
-      <img class="hero-slide is-active" src="slide1.jpg" alt="野毛たべもの横丁">
-      <img class="hero-slide" src="slide2.jpg" alt="野毛たべもの横丁">
-      <img class="hero-slide" src="slide3.jpg" alt="野毛たべもの横丁">
-      <img class="hero-slide" src="slide4.jpg" alt="野毛たべもの横丁">
+      <div class="hero-slide is-active"><img src="slide1.jpg" alt="野毛たべもの横丁 入口看板"></div>
+      <div class="hero-slide"><img src="slide2.jpg" alt="野毛たべもの横丁 夜の入口"></div>
+      <div class="hero-slide"><img src="slide3.jpg" alt="Graine Marche 料理"></div>
+      <div class="hero-slide"><img src="slide4.jpg" alt="焼き鳥"></div>
     </div>
     <div class="hero-grad" aria-hidden="true"></div>
     <div class="hero-bar" aria-hidden="true">
@@ -327,10 +338,11 @@ img{display:block;width:100%;height:auto;}
       </button>
     </div>
     <div class="hero-content">
-      <h1 class="hero-title">今日、<br>野毛横丁で<br>何たべる？</h1>
+      <h1 class="hero-title">今日、<br>野毛横丁で<br>何飲む？</h1>
       <p class="hero-sub">個性あふれるお店がひしめく大人の横丁。<br>きっとお気に入りが見つかる。</p>
       <a class="btn-hero" href="#access">アクセス・マップを見る &nbsp;›</a>
     </div>
+    <div class="slide-dots" id="slideDots"></div>
   </section>
 
   <!-- Category -->
@@ -465,17 +477,17 @@ img{display:block;width:100%;height:auto;}
 
 <script>
 const shops = [
-  { name:"Graine Marche", catch:"横丁の夜に寄り添う、気軽なビストロ酒場。", genre:"ビストロ", hours:"17:00-23:30", budget:"4,000〜6,000円", seats:"12席", detailUrl:"#", image:"logo_shop01.png", imageType:"logo" },
-  { name:"スナック へそまがり", catch:"もう少し飲みたい夜に、肩ひじ張らない一杯を。", genre:"スナック", hours:"20:00-26:00", budget:"3,000〜5,000円", seats:"14席", detailUrl:"#", image:"logo_shop02.png", imageType:"logo" },
-  { name:"鉄板焼き 肘鉄", catch:"湯気とソースの香りで始まる野毛の夜。", genre:"鉄板焼", hours:"16:00-24:00", budget:"3,000〜4,500円", seats:"20席", detailUrl:"#", image:"logo_shop03.png", imageType:"logo" },
-  { name:"居酒屋 あお", catch:"一軒目にも二軒目にも使いやすい、横丁の居酒屋。", genre:"居酒屋", hours:"17:00-24:00", budget:"3,000〜4,500円", seats:"18席", detailUrl:"#", image:"logo_shop04.png", imageType:"logo" },
-  { name:"まんぼう", catch:"魚と酒を気軽に楽しむ、野毛らしい一軒。", genre:"海鮮", hours:"18:00-24:00", budget:"3,500〜5,000円", seats:"16席", detailUrl:"#", image:"logo_shop05.png", imageType:"logo" },
-  { name:"串カツと串中 夢源", catch:"揚げたてを片手に、軽く一杯から。", genre:"串カツ", hours:"15:00-23:00", budget:"2,000〜3,500円", seats:"20席", detailUrl:"#", image:"logo_shop06.png", imageType:"logo" },
-  { name:"超ホルモン", catch:"煙までうまい、香ばしいホルモン酒場。", genre:"ホルモン", hours:"17:00-23:00", budget:"3,000〜4,000円", seats:"22席", detailUrl:"#", image:"logo_shop07.png", imageType:"logo" }
+  { name:"Bistro Graine Marche", catch:"厳選お肉と新鮮魚をココットやオーブンで。ワインと過ごす横丁の夜。", genre:"ビストロ", hours:"17:00〜24:00", tel:"045-243-2230", budget:"4,000〜6,000円", detailUrl:"shop/index.html#shop01", image:"common_img/ph_shop01.jpg", imageType:"photo" },
+  { name:"スナック へそまがり", catch:"オール飲み放題・歌い放題。ナウなヤングが集う横丁の隠れ家。", genre:"スナック", hours:"19:00〜限界まで", tel:"", budget:"3,000〜5,000円", detailUrl:"shop/index.html#shop02", image:"common_img/ph_shop02.jpg", imageType:"photo" },
+  { name:"鉄板焼 肘鉄 HIJITETU", catch:"鉄板から作り出す料理のライブ感。名物一洋食は一度食べたら忘れられない。", genre:"鉄板焼", hours:"17:00〜24:00", tel:"045-315-6877", budget:"3,000〜4,500円", detailUrl:"shop/index.html#shop03", image:"common_img/ph_shop03.jpg", imageType:"photo" },
+  { name:"居酒屋 あお", catch:"豊富でリーズナブルな焼酎ラインナップ。食べたいメニューが必ずある店。", genre:"居酒屋", hours:"17:00〜24:00", tel:"080-6787-7637", budget:"2,500〜4,000円", detailUrl:"shop/index.html#shop04", image:"common_img/ph_shop04.jpg", imageType:"photo" },
+  { name:"立喰寿司 まんぼう", catch:"職人が握る絶品の立ち食い寿司。横丁唯一のVIPルームあり。", genre:"立喰寿司", hours:"17:00〜24:00", tel:"045-315-6106", budget:"3,000〜5,000円", detailUrl:"shop/index.html#shop05", image:"common_img/ph_shop05.jpg", imageType:"photo" },
+  { name:"串カツ・どて串 夢源", catch:"名物串カツ・どて串・味噌串カツ100円！ガッツリ食べてガッツリ飲める。", genre:"串カツ", hours:"17:00〜翌2:00", tel:"", budget:"2,000〜3,500円", detailUrl:"shop/index.html#shop06", image:"common_img/ph_shop06.jpg", imageType:"photo" },
+  { name:"関西スタイルホルモン焼 超ホルモン", catch:"超〜おいしいホルモンのオンパレード。ヤミツキになる味。", genre:"ホルモン", hours:"17:00〜翌5:00", tel:"045-315-6563", budget:"2,500〜4,000円", detailUrl:"shop/index.html#shop07", image:"common_img/ph_shop07.jpg", imageType:"photo" }
 ];
 
 function shopCard(shop, i) {
-  const basePrice = shop.budget.split('〜')[0].replace('円','').replace(',','');
+  const telHtml = shop.tel ? `<a class="shop-tel" href="tel:${shop.tel}">📞 ${shop.tel}</a>` : '';
   return `<article class="shop-card" id="shop-${i}">
   <div class="shop-img-wrap ${shop.imageType==='logo'?'is-logo':''}">
     <img src="${shop.image}" alt="${shop.name}" loading="lazy"
@@ -487,9 +499,9 @@ function shopCard(shop, i) {
     <p class="shop-copy">${shop.catch}</p>
     <div class="shop-chips">
       <span class="shop-chip">${shop.hours}</span>
-      <span class="shop-chip">${shop.seats}</span>
     </div>
-    <p class="shop-budget">🍺 生ビール ${parseInt(basePrice).toLocaleString()}円〜</p>
+    ${telHtml}
+    <p class="shop-budget">目安 ${shop.budget}</p>
     <a class="shop-btn" href="${shop.detailUrl}"><span>詳しく見る</span><span>›</span></a>
   </div>
 </article>`;
@@ -497,15 +509,32 @@ function shopCard(shop, i) {
 document.getElementById("allShopGrid").innerHTML = shops.map((s,i)=>shopCard(s,i)).join("");
 
 /* slideshow */
-const slides = document.querySelectorAll(".hero-slide");
-let cur = 0;
-if(slides.length > 1){
-  setInterval(()=>{
-    slides[cur].classList.remove("is-active");
-    cur = (cur + 1) % slides.length;
-    slides[cur].classList.add("is-active");
-  }, 4000);
-}
+(function(){
+  const slides = Array.from(document.querySelectorAll('.hero-slide'));
+  const dotsWrap = document.getElementById('slideDots');
+  if(!slides.length) return;
+  let cur = 0, timer;
+
+  // build dots
+  slides.forEach((_,i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'slide-dot' + (i===0?' is-active':'');
+    btn.setAttribute('aria-label', `スライド ${i+1}`);
+    btn.addEventListener('click',()=>{ goTo(i); restart(); });
+    dotsWrap.appendChild(btn);
+  });
+  const dots = Array.from(dotsWrap.querySelectorAll('.slide-dot'));
+
+  function goTo(n){
+    slides[cur].classList.remove('is-active');
+    dots[cur].classList.remove('is-active');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('is-active');
+    dots[cur].classList.add('is-active');
+  }
+  function restart(){ clearInterval(timer); timer = setInterval(()=>goTo(cur+1), 4500); }
+  restart();
+})();
 
 /* map scale */
 const mapImg = document.getElementById("yokochoMapImg");
