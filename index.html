@@ -178,6 +178,63 @@ img{display:block;width:100%;height:auto;}
   border-radius:var(--r-sm);font-size:13px;font-weight:800;margin-top:auto;
 }
 
+/* ===== News ===== */
+.news-section{padding:24px 0 32px;background:var(--bg);border-top:1px solid var(--line);}
+.news-inner{max-width:1280px;margin:0 auto;}
+.news-head{padding:0 18px 12px;display:flex;align-items:flex-end;justify-content:space-between;}
+.news-tags{
+  display:flex;gap:8px;padding:0 18px 14px;
+  overflow-x:auto;scrollbar-width:none;
+}
+.news-tags::-webkit-scrollbar{display:none;}
+.news-tag{
+  padding:5px 14px;border-radius:999px;font-size:12px;font-weight:700;
+  cursor:pointer;border:1.5px solid transparent;
+  transition:background .15s,color .15s,border-color .15s;
+  white-space:nowrap;flex-shrink:0;background:none;
+}
+.news-tag[data-tag="all"]{background:#2a2424;border-color:rgba(255,255,255,.18);color:var(--text-sub);}
+.news-tag[data-tag="all"].is-active,.news-tag[data-tag="all"]:hover{background:#3a3030;border-color:rgba(255,255,255,.35);color:var(--text);}
+.news-tag[data-tag="event"]{background:#3d1a12;color:#f09070;border-color:#7a3020;}
+.news-tag[data-tag="event"].is-active,.news-tag[data-tag="event"]:hover{background:#5a2518;border-color:#e07050;}
+.news-tag[data-tag="recruit"]{background:#142810;color:#70c450;border-color:#305c18;}
+.news-tag[data-tag="recruit"].is-active,.news-tag[data-tag="recruit"]:hover{background:#1e3e18;border-color:#70c450;}
+.news-tag[data-tag="new"]{background:#0e1e38;color:#60a8f0;border-color:#1c4882;}
+.news-tag[data-tag="new"].is-active,.news-tag[data-tag="new"]:hover{background:#162e50;border-color:#60a8f0;}
+.news-tag[data-tag="limited"]{background:#382010;color:#e8a050;border-color:#7a4810;}
+.news-tag[data-tag="limited"].is-active,.news-tag[data-tag="limited"]:hover{background:#503015;border-color:#e8a050;}
+.news-tag[data-tag="special"]{background:#320e1e;color:#e870b0;border-color:#761848;}
+.news-tag[data-tag="special"].is-active,.news-tag[data-tag="special"]:hover{background:#481428;border-color:#e870b0;}
+.news-track{
+  display:flex;gap:14px;padding:4px 18px 12px;
+  overflow-x:auto;scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;scrollbar-width:none;
+}
+.news-track::-webkit-scrollbar{display:none;}
+.news-card{
+  flex:0 0 82vw;max-width:300px;scroll-snap-align:start;flex-shrink:0;
+  background:#f5f0e8;border-radius:var(--r);overflow:hidden;
+  box-shadow:0 2px 12px rgba(0,0,0,.45);
+}
+.news-card-img{
+  width:100%;aspect-ratio:4/3;overflow:hidden;
+  background:#e0d8cc;display:flex;align-items:center;justify-content:center;
+}
+.news-card-img img{width:100%;height:100%;object-fit:cover;display:block;}
+.news-card-img-empty{color:#b0a898;font-size:32px;line-height:1;}
+.news-card-body{padding:12px 14px 16px;}
+.news-card-tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700;margin-bottom:8px;}
+.news-card-tag.event{background:#FAECE7;color:#993C1D;}
+.news-card-tag.recruit{background:#EAF3DE;color:#3B6D11;}
+.news-card-tag.new{background:#E6F1FB;color:#185FA5;}
+.news-card-tag.limited{background:#FAEEDA;color:#854F0B;}
+.news-card-tag.special{background:#FBEAF0;color:#993556;}
+.news-card-shop{font-size:11px;color:#8a7e76;font-weight:600;margin-bottom:4px;}
+.news-card-title{font-size:14px;font-weight:700;color:#2b2520;line-height:1.45;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.news-card-desc{font-size:12px;color:#6a5e56;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.news-card-date{font-size:11px;color:#8a7e76;font-weight:600;margin-top:8px;}
+.news-empty{padding:32px 18px;color:var(--text-muted);font-size:13px;text-align:center;}
+
 /* ===== Enjoy ===== */
 .enjoy-section{padding:32px 18px 36px;background:var(--bg-2);border-block:1px solid var(--line);}
 .enjoy-inner{max-width:1280px;margin:0 auto;}
@@ -286,6 +343,17 @@ img{display:block;width:100%;height:auto;}
   }
   .shop-card{flex:none;max-width:none;}
 
+  /* news */
+  .news-section{padding:56px 28px 64px;}
+  .news-head{padding:0 0 12px;}
+  .news-tags{flex-wrap:wrap;padding:0 0 14px;overflow:visible;}
+  .news-track{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    overflow:visible;padding:0;gap:20px;
+  }
+  .news-card{flex:none;max-width:none;transition:transform .2s,box-shadow .2s;}
+  .news-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(0,0,0,.6);}
+
   .enjoy-section{padding:56px 28px 64px;}
   .enjoy-inner{max-width:1280px;}
   .steps{gap:16px;}
@@ -388,6 +456,21 @@ img{display:block;width:100%;height:auto;}
 
     </div>
   </div>
+
+  <!-- News -->
+  <section class="news-section" id="news" aria-labelledby="news-title">
+    <div class="news-inner">
+      <div class="news-head">
+        <div>
+          <p class="sec-kicker">OPEN NEWS</p>
+          <h2 class="sec-title" id="news-title">横丁NEWS</h2>
+        </div>
+        <a class="shops-head-right" href="#">すべて見る ›</a>
+      </div>
+      <div class="news-tags" id="newsTags" role="group" aria-label="ニュースフィルター"></div>
+      <div class="news-track" id="newsTrack"></div>
+    </div>
+  </section>
 
   <!-- Enjoy -->
   <section class="enjoy-section" id="enjoy" aria-labelledby="enjoy-title">
@@ -536,6 +619,96 @@ document.getElementById("allShopGrid").innerHTML = shops.map((s,i)=>shopCard(s,i
   function restart(){ clearInterval(timer); timer = setInterval(()=>goTo(cur+1), 4500); }
   restart();
 })();
+
+/* ===== News ===== */
+const newsItems = [
+  {
+    id: "news-001",
+    tag: "event",
+    tagLabel: "イベント",
+    shopName: "超ホルモン",
+    title: "3周年記念！一か月間飲み放題無料キャンペーン実施中",
+    description: "おかげさまで3周年。ご来店いただいたお客様全員に特典をご用意しています。",
+    date: "2026.05.01",
+    image: "",
+    published: true
+  },
+  {
+    id: "news-002",
+    tag: "limited",
+    tagLabel: "期間限定",
+    shopName: "Bistro Graine Marche",
+    title: "春の特別コース ストウブ煮込み×ワインペアリング",
+    description: "4月限定の特別コースをご用意しました。ご予約はお電話にて承ります。",
+    date: "2026.04.15",
+    image: "",
+    published: true
+  },
+  {
+    id: "news-003",
+    tag: "recruit",
+    tagLabel: "求人",
+    shopName: "野毛たべもの横丁",
+    title: "スタッフ募集中！一緒に横丁を盛り上げませんか",
+    description: "経験不問。明るく元気な方を歓迎します。詳細はお問い合わせください。",
+    date: "2026.04.01",
+    image: "",
+    published: true
+  }
+];
+
+const newsTagDefs = [
+  {key:"all",     label:"すべて"},
+  {key:"event",   label:"イベント"},
+  {key:"recruit", label:"求人"},
+  {key:"new",     label:"新店舗"},
+  {key:"limited", label:"期間限定"},
+  {key:"special", label:"特集"},
+];
+
+function buildNewsCard(item) {
+  const imgHtml = item.image
+    ? `<img src="${item.image}" alt="${item.title}" loading="lazy" onerror="this.parentElement.innerHTML='<span class=\\"news-card-img-empty\\">📷</span>'">`
+    : `<span class="news-card-img-empty">📷</span>`;
+  return `<article class="news-card" data-tag="${item.tag}">
+  <div class="news-card-img">${imgHtml}</div>
+  <div class="news-card-body">
+    <span class="news-card-tag ${item.tag}">${item.tagLabel}</span>
+    <div class="news-card-shop">${item.shopName}</div>
+    <div class="news-card-title">${item.title}</div>
+    <div class="news-card-desc">${item.description}</div>
+    <div class="news-card-date">${item.date}</div>
+  </div>
+</article>`;
+}
+
+function renderNewsCards(filter) {
+  const track = document.getElementById("newsTrack");
+  if (!track) return;
+  const visible = newsItems.filter(n =>
+    n.published !== false && (filter === "all" || n.tag === filter)
+  );
+  track.innerHTML = visible.length
+    ? visible.map(buildNewsCard).join("")
+    : `<p class="news-empty">該当するお知らせはありません。</p>`;
+}
+
+function renderNewsTags(active) {
+  const wrap = document.getElementById("newsTags");
+  if (!wrap) return;
+  wrap.innerHTML = newsTagDefs.map(t =>
+    `<button class="news-tag${t.key === active ? " is-active" : ""}" data-tag="${t.key}">${t.label}</button>`
+  ).join("");
+  wrap.querySelectorAll(".news-tag").forEach(btn =>
+    btn.addEventListener("click", () => {
+      renderNewsTags(btn.dataset.tag);
+      renderNewsCards(btn.dataset.tag);
+    })
+  );
+}
+
+renderNewsTags("all");
+renderNewsCards("all");
 
 /* map scale */
 const mapImg = document.getElementById("yokochoMapImg");
