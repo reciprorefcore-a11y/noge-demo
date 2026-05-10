@@ -57,8 +57,10 @@ img{display:block;width:100%;height:auto;}
 .header-reserve:hover{background:var(--accent);}
 
 /* ===== Hero ===== */
-.main-visual{position:relative;background:var(--bg);overflow:hidden;}
-#heroImage{width:100%;height:58vh;min-height:320px;max-height:560px;object-fit:cover;object-position:center;}
+.main-visual{position:relative;background:var(--bg);overflow:hidden;height:58vh;min-height:320px;max-height:560px;}
+.hero-slides{position:absolute;inset:0;}
+.hero-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition:opacity 1s ease;}
+.hero-slide.is-active{opacity:1;}
 .hero-grad{
   position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(to bottom,rgba(0,0,0,.10) 0%,rgba(0,0,0,.04) 30%,rgba(0,0,0,.10) 60%,rgba(0,0,0,.52) 100%);
@@ -238,7 +240,7 @@ img{display:block;width:100%;height:auto;}
   }
   .hero-bar{display:none;}
 
-  #heroImage{height:70vh;min-height:420px;max-height:700px;}
+  .main-visual{height:70vh;min-height:420px;max-height:700px;}
   .hero-content{padding:48px 72px 80px;}
 
   /* category */
@@ -308,8 +310,12 @@ img{display:block;width:100%;height:auto;}
 <main>
   <!-- Hero -->
   <section class="main-visual" aria-label="メインビジュアル">
-    <img id="heroImage" src="images/top1.png" alt="野毛たべもの横丁の路地"
-      onerror="this.closest('.main-visual').classList.add('is-missing');this.remove();">
+    <div class="hero-slides" id="heroSlides">
+      <img class="hero-slide is-active" src="slide1.jpg" alt="野毛たべもの横丁">
+      <img class="hero-slide" src="slide2.jpg" alt="野毛たべもの横丁">
+      <img class="hero-slide" src="slide3.jpg" alt="野毛たべもの横丁">
+      <img class="hero-slide" src="slide4.jpg" alt="野毛たべもの横丁">
+    </div>
     <div class="hero-grad" aria-hidden="true"></div>
     <div class="hero-bar" aria-hidden="true">
       <a class="hero-bar-logo" href="index.html">
@@ -489,14 +495,16 @@ function shopCard(shop, i) {
 }
 document.getElementById("allShopGrid").innerHTML = shops.map((s,i)=>shopCard(s,i)).join("");
 
-/* hero fallback */
-const heroImg = document.getElementById("heroImage");
-const fallbacks = ["img_head.png","img_slide01.jpg"];
-let fbIdx = 0;
-heroImg && heroImg.addEventListener("error", function(){
-  if(fbIdx < fallbacks.length) this.src = fallbacks[fbIdx++];
-  else { this.closest(".main-visual").classList.add("is-missing"); this.remove(); }
-},{once:false});
+/* slideshow */
+const slides = document.querySelectorAll(".hero-slide");
+let cur = 0;
+if(slides.length > 1){
+  setInterval(()=>{
+    slides[cur].classList.remove("is-active");
+    cur = (cur + 1) % slides.length;
+    slides[cur].classList.add("is-active");
+  }, 4000);
+}
 
 /* map scale */
 const mapImg = document.getElementById("yokochoMapImg");
